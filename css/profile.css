@@ -1,0 +1,37 @@
+.user{
+	width: 80%;
+	height: 700px;
+	margin: 0 auto;
+}
+.data{
+	width: 100%;
+	height: 200px;
+	display: inline-flex;
+}
+
+.user_img{
+	width: 30%;
+	height: 100%;
+}
+.user_data{
+	width: 70%;
+	height: 100%;
+}
+.user_img img{
+	width: 80%;
+	height: auto;
+	border: 5px solid red;
+}
+.friends{
+	width: 30%;
+	height: 100%;
+}
+.articles{
+	width: 70%;
+	height: 100%;
+}
+.data_bottom{
+	width: 100%;
+	height: 500px;
+	display: inline-flex;
+}
