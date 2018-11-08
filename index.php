@@ -69,13 +69,17 @@ if (isset($data['registration'])) {
 	<title>Выполните вход или зарегистрируйтесь</title>
 	<link rel="stylesheet" type="text/css" href="/css/index.css">
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+	<?php include '/wrapper/links.php'; ?>
+	<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 	<meta charset="utf-8">
 </head>
-<body>
+<body style="margin: 0; background: #E9EBEE;">
 	<header>
 		<div class="headercontent">
 			<div class="logo">
-				
+				<h1 style="font-family: 'LifeCraft'">Prometheus</h1>
 			</div>
 			<div class="login">
 			<form style="display: inline-flex;" method="post" action="index.php">
