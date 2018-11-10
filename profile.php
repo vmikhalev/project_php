@@ -47,13 +47,46 @@ R::close();
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 </head>
 <body style="margin: 0; background: #E9EBEE;">
+    <div id="blackground"></div>
 	<?php include 'wrapper/header.php'; ?>
 
 
+<div style="display: inline-flex;">
+<aside class="menu">
+
+    <nav>
+        <ul>
+            <li><a href="profile.php?id=<?=$_SESSION['logged_user']->id?>">Профиль</a></li>
+            <li><a href="#">Музыка</a></li>
+            <li><a href="people.php">Люди</a></li>
+        </ul>
+    </nav>
+    
+</aside>
 <section class="user">
 	<section class="data">
 		<div class="user_img">
 			<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlWin_mmxqWOhpO7wb4AV3KmS6_13umVIWKPLxVMSoLDAP90vX">
+            <?php if (isset($_SESSION['logged_user']) && $_SESSION['logged_user']->email == $post->email):?>
+                <button id="startmodal" class="stand_button">Загрузить фото</button>
+            <?php else: ?>
+                <button id="startmodal" class="stand_button">Написать сообщение</button>
+            <?php endif; ?>
+
+            <div id="modalcontainer">
+                <div class="modalcontent">
+                    <?php if($_SESSION['logged_user']->email == $post->email): ?>
+                        <h1>Загрузка изображения</h1>
+                        <form enctype="multipart/form-data" method="post" action="loadphoto.php">
+                            <input type="file" name="file"><br>
+                            <input type="submit" name="go_load" value="Загрузить">
+                        </form>
+                    <?php else: ?>
+                        <h1>Messages</h1>
+                    <?php endif; ?>
+                </div>
+            </div>
+
 		</div>
 		<div class="user_data">
 			<h1><?=$post->name ?>&nbsp; <?=$post->surname ?></h1>
@@ -73,7 +106,7 @@ R::close();
 				</form>
 			</div>
 <?php endif; ?>
-<br><br><br><br>
+<br><br><br>
 
 
 <article class="posts">
@@ -138,6 +171,8 @@ R::close();
 	</section>
 </section>
 
+
+</div>
 
 
 

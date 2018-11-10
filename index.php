@@ -57,6 +57,8 @@ if (isset($data['registration'])) {
     $users->email = $data['email'];
     $users->password = password_hash($data['password'], PASSWORD_DEFAULT);
     $users->birthday = $data['birthday'];
+    $users->avatar = '/images/no_photo.png';
+    $users->activated = '0';
     R::store($users);
     echo "<script>alert('Ви успешно зарегистрировались')</script>";
   }

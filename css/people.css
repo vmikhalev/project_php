@@ -1,0 +1,21 @@
+body{
+	background-color: #E9EBEE;
+}
+section{
+	width: 70%;
+	height: 800px;
+	background: white;
+	margin: 0 auto;
+}
+.results{
+	width: 90%;
+	height: 100%;
+	margin: 0 auto;
+	padding-top: 5%;
+}
+.results article{
+	display: inline-flex;
+	width: 80%;
+	height: auto;
+	padding-top: 5px;
+}

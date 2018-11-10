@@ -21,3 +21,31 @@ $(function () {
         }
    });
 });
+
+var flag = 0;
+document.getElementById('startmodal').onclick=function(){
+
+  var blackground = document.getElementById('blackground');
+  var container = document.getElementById('modalcontainer');
+  blackground.style.height = '100%';
+  container.style.height = '60%';
+  flag = 1;
+
+  // blackground.onclick=function{
+  //     if(flag == 0){
+
+  // }else{
+  //   document.getElementById('blackground').style.height = '0';
+  //   document.getElementById('modalcontainer').style.height = '0';
+  // }
+  // }
+}
+
+// document.getElementById('blackground').onclick=function{
+//   if(flag == 0){
+
+//   }else{
+//     document.getElementById('blackground').style.height = '0';
+//     document.getElementById('modalcontainer').style.height = '0';
+//   }
+// }
