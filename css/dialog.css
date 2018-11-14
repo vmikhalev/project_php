@@ -1,0 +1,53 @@
+body{
+	background-color: #E9EBEE;
+}
+section{
+	width: 70%;
+	height: 850px;
+	background: white;
+	margin: 0 auto;
+}
+.results{
+	width: 90%;
+	height: 70%;
+	margin: 0 auto;
+	padding-top: 5%;
+	overflow-y: auto;
+}
+.results article{
+	width: 80%;
+	height: auto;
+	padding-top: 5px;
+	display: inline-flex;
+}
+
+.add_text_content{
+	width: 100%;
+	height: 30%;
+	border-top: 2px solid grey;
+}
+.add_text_content div{
+	width: 80%;
+	height: 90%;
+	margin: 0 auto;
+	margin-top: 3%;
+}
+.add_text_content div textarea{
+	width: 100%;
+}
+.add_text_content div input{
+	float: right;
+}
+
+.text_in_article{
+}
+
+
+
+.name{
+
+}
+.date{
+	color: grey;
+	font-size: 13px;
+}

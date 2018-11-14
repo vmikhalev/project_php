@@ -1,0 +1,50 @@
+body{
+	background-color: #E9EBEE;
+}
+.message_border{
+	width: 60%;
+	height: 800px;
+	background: white;
+	margin-left: 10%;
+	border-radius: 0 0 20px 20px;
+}
+.results{
+	width: 90%;
+	height: 100%;
+	margin: 0 auto;
+	padding-top: 5%;
+}
+.results article{
+	display: inline-flex;
+	width: 80%;
+	height: auto;
+	padding-top: 5px;
+}
+aside{
+	width: 20%;
+	margin-right: 10%;
+
+}
+.panels{
+	width: 100%;
+	height: 100%;
+}
+.type_message{
+	width: 95%;
+	margin: 0 auto;
+	height: 30%;
+	background-color: white;
+	border-radius: 20px;
+}
+.type_message ul{
+	list-style-type: none;
+}
+
+
+#inbox{
+	overflow: hidden;
+}
+#outbox{
+	height: 0;
+	overflow: hidden;
+}

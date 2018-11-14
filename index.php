@@ -36,6 +36,9 @@ if (isset($data['registration'])) {
   if (trim($data['email'] == '')) {
     $errors[] = "Введите email или номер телефона";
   }
+  if (trim($data['city'] == '')) {
+    $errors[] = "Введите свой город";
+  }
   if ($data['password'] == '') {
     $errors[] = "Введите пароль";
   }
@@ -57,6 +60,7 @@ if (isset($data['registration'])) {
     $users->email = $data['email'];
     $users->password = password_hash($data['password'], PASSWORD_DEFAULT);
     $users->birthday = $data['birthday'];
+    $users->city = $data['city'];
     $users->avatar = '/images/no_photo.png';
     $users->activated = '0';
     R::store($users);
@@ -87,14 +91,14 @@ if (isset($data['registration'])) {
 			<form style="display: inline-flex;" method="post" action="index.php">
 				<div class="email_login">
 					<label>Электронный адрес или номер телефона</label><br />
-					<input type="text" name="email_login">
+					<input required type="text" name="email_login">
 				</div>
 				<div class="password_login">
 					<label>Пароль</label><br />
-					<input type="password" name="password_login">
+					<input required type="password" name="password_login">
 				</div>
 				<div class="button_login">
-					<button name="do_login">Вход</button>
+					<button  name="do_login">Вход</button>
 				</div>
 			</form>
 			</div>
@@ -112,17 +116,19 @@ if (isset($data['registration'])) {
 				<h3>Это бесплатно</h3>
 				<br />
 				<form method="post" class="reg_form">
-					<input type="text" name="name" placeholder="Имя">
-					<input type="tetx" name="surname" placeholder="Фамилия"><br /><br />
-					<input type="text" name="email" placeholder="Номер мобильного телефона или эл. адрес"><br /><br />
-					<input type="password" name="password" placeholder="Пароль"><br /><br />
+					<input type="text" name="name" placeholder="Имя" required>
+					<input type="tetx" name="surname" placeholder="Фамилия" required><br /><br />
+					<input type="text" name="email" placeholder="Номер мобильного телефона или эл. адрес" required>
+					<input type="password" name="password" placeholder="Пароль" required><br /><br />
+					<input type="text" name="city" placeholder="Укажите свой город" required><br /><br />
 					<label>Дата рождения</label><br />
-					<input type="date" name="birthday"><br /><br />
-					<input type="radio" name="sex" id="female" onclick="radio();">
-					<label>Женщина</label>
-					<input type="radio" name="sex" id="male" onclick="radio();">
-					<label>Мужчина</label><br /><br />
-					<input value="0" type="hidden" name="radio_">
+					<input type="date" name="birthday" required><br /><br />
+					<!-- <select name="result" id="selectItem">
+						<option id="chelyabinsk">Челябинск</option>
+						<option id="moskva">Москва</option>
+						<option id="piter">Санкт-Петербург</option>
+						<option id="nnovgor">Нижний Новгород</option>
+					</select> -->
 					<button name="registration">Регистрация</button>
 				</form>
 			</div>

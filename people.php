@@ -1,8 +1,10 @@
 <?php 
 require 'db.php';
+$id = $_SESSION['logged_user']->id;
+$people =  R::getAll('SELECT * FROM people');
 
-$people =  R::getAssoc('SELECT * FROM people');
-$people_id = R::getAssoc('SELECT id FROM people');
+$friends_sender = R::getAll('SELECT * FROM friends WHERE sender != 0 OR taker != 0');
+$friends_accept = R::getAll('SELECT * FROM friends WHERE accept != 0');
  ?>
  <!DOCTYPE html>
  <html>
@@ -15,22 +17,22 @@ $people_id = R::getAssoc('SELECT id FROM people');
  	<?php include 'wrapper/header.php'; ?>
  	<section>
  		<div class="results">
+ 			<h3>Вы можете их знать</h3>
  			<?php foreach($people as $row): ?>
  				<article>
  					<div>
- 						<img src="http://dummyimage.com/60x60/4d494d/686a82.gif&text=placeholder+image" alt="placeholder+image">
+ 						<img style="border-radius: 50%;width: 70px;height: 70px;" src="<?=$row['avatar'] ?>">
  					</div>
  					<div>
- 						<?php foreach($people_id as $id): ?>
- 							<p><a href='profile.php?id=<?=$id['id'] ?>'><?=$row['name']; ?>
+ 							<p><a href='profile.php?id=<?=$row['id'] ?>'><?=$row['name']; ?>
  						   												<?=$row['surname']; ?></a>
  							</p>
- 						<?php endforeach; ?>
+ 					</div>
+ 					<div style="width: 60%;" class="add_friend">
+ 							<a href="add_friend.php?friend=<?=$row['id'] ?>"><button style="float: right;" name="add_friend">Добавить в друзья</button></a>
  					</div>
  				</article>
  			<?php endforeach; ?>
- 			 	
-
  		</div>
  	</section>
  </body>

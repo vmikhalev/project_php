@@ -8,12 +8,12 @@ p{
 	font-size: 13px;
 }
 .user{
-	width: 80%;
+	width: 70%;
 	height: 700px;
 }
 .data{
 	width: 100%;
-	height: 200px;
+	height: 250px;
 	display: inline-flex;
 }
 
@@ -28,12 +28,11 @@ p{
 .user_img img{
 	width: 80%;
 	height: auto;
-	border: 5px solid red;
 }
 .friends{
 	width: 30%;
 	height: 90%;
-	background: yellow;
+	background: white;
 	border-radius: 3%;
 }
 .articles{
@@ -299,4 +298,55 @@ body {
 } 
 .modalcontent h1{
     text-align: center;
+}
+
+
+.comment_container{
+    width: 100%;
+}
+
+.friends_blocks{
+    display: inline-flex;
+    width: 100%;
+    height: 100%;
+}
+.friends_blocks article{
+    width: 100%;
+    height: auto;
+    color: black;
+}
+.img_friend img{
+    width: 100%;
+    height: 90%;
+}
+.img_friend{
+    width: 100%;
+    height: 80%;
+}
+.a_art{
+    width: 30%;
+    height: 100%;
+    padding-right: 3%;
+}
+
+.user_data{
+    background-color: white
+}
+.logo_text{
+    width: 100%;
+    height: 30px;
+    border-bottom: 1px solid grey;
+    padding-left: 1%;
+}
+.logo_text h1{
+    font-size: 20px;
+}
+.info{
+    width: 100%;
+    height: 50%;
+    padding-top: 20px;
+    padding-right: 60px;
+}
+.info ul{
+    list-style-type: none;
 }
