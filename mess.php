@@ -1,5 +1,9 @@
 <?php 
 require 'db.php';
+if (!(isset($_SESSION['logged_user']))) {
+    R::close();
+    exit();
+}else{
 
 if(isset($_POST['send_text'])){
 
@@ -12,5 +16,5 @@ if(isset($_POST['send_text'])){
 	
 }
 
-
+}
  ?>

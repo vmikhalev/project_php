@@ -1,9 +1,10 @@
 <?php 
-// if(!is_string($_GET['who'])){
-// 	exit();
-// }else{
-
 require 'db.php';
+
+if (!is_numeric($_GET['who']) || !(isset($_SESSION['logged_user']))) {
+    R::close();
+    exit();
+}else{
 
 $id = $_SESSION['logged_user']->id;
 
@@ -18,12 +19,36 @@ $sms = R::getAssoc("SELECT * FROM messages WHERE recipient = ".$id." AND author 
 	<?php include 'wrapper/links.php'; ?>
 	<link rel="stylesheet" type="text/css" href="css/dialog.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('#add_mess').bind('click', function(){
+				var author = <?=$id ?>;
+				var recipient = <?=$_GET['who'] ?>;
+				var text = $("#text_dialog").val();
+				function Before(){
+					$('#error').text('Отправка сообщения');
+				}
+				function Suc(){
+					$("#articles").load("/dialog.php?who=<?=$_GET['who'] ?> #articles > *");
+					$("#text_dialog").val("");
+				}
+				$.ajax({
+					url: "add_dialog_mess.php",
+					type: 'POST',
+					data: ({author: author, recipient: recipient, text: text}),
+					dataType: 'html',
+					sendBefore: Before,
+					success: Suc
+				});
+			});
+		});
+	</script>
 </head>
 <body>
 	<?php include 'wrapper/header.php'; ?>
  	<section>
- 		<div class="results">
+ 		<div id="articles" class="results">
+			
  			<?php foreach ($sms as $key) {
  				$author = $key['author'];
  				$recipient = $key['recipient'];
@@ -39,7 +64,7 @@ $sms = R::getAssoc("SELECT * FROM messages WHERE recipient = ".$id." AND author 
  					?>
 
 
-				<article>
+				<article id="sms_article">
  					<div>
  						<img style="border-radius:50%;width: 70px;height: 70px;" src="<?=$row['avatar'] ?>">
  					</div>
@@ -59,15 +84,13 @@ $sms = R::getAssoc("SELECT * FROM messages WHERE recipient = ".$id." AND author 
  				}
  			} ?>
 
- 		</div>
+		</div>
  		<section class="add_text_content">
  				<div>
- 					<form id="mess_form" method="post" action="">
  						<textarea id="text_dialog" name="text" rows="5" placeholder="Напиши текст"></textarea><br>
- 						<span id="error_m"></span><br>
+ 						<p id="error"></p>
  						<input id="add_mess"  type="submit" value="Отправить" name="send_text">
- 				</form>
- 				<h3 style="color: red;"><?=$error; ?></h3>
+
  				</div>
  		</section>
  	</section>
@@ -79,3 +102,4 @@ $sms = R::getAssoc("SELECT * FROM messages WHERE recipient = ".$id." AND author 
 </body>
 </html>
 
+<?php } ?>

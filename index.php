@@ -64,7 +64,8 @@ if (isset($data['registration'])) {
     $users->avatar = '/images/no_photo.png';
     $users->activated = '0';
     R::store($users);
-    echo "<script>alert('Ви успешно зарегистрировались')</script>";
+    echo "<script>alert('Ви успешно зарегистрировались, на вашу почту отправлено подтверждающее письмо')</script>";
+    mail($data['email'], 'subject', 'message');
   }
 
 }

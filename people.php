@@ -1,7 +1,13 @@
 <?php 
 require 'db.php';
+
+if (!(isset($_SESSION['logged_user']))) {
+    R::close();
+    exit();
+}else{
+
 $id = $_SESSION['logged_user']->id;
-$people =  R::getAll('SELECT * FROM people');
+$people =  R::getAll('SELECT * FROM people WHERE email != '.$user->email);
 
 $friends_sender = R::getAll('SELECT * FROM friends WHERE sender != 0 OR taker != 0');
 $friends_accept = R::getAll('SELECT * FROM friends WHERE accept != 0');
@@ -28,12 +34,15 @@ $friends_accept = R::getAll('SELECT * FROM friends WHERE accept != 0');
  						   												<?=$row['surname']; ?></a>
  							</p>
  					</div>
- 					<div style="width: 60%;" class="add_friend">
+ 					<!-- <div style="width: 60%;" class="add_friend">
  							<a href="add_friend.php?friend=<?=$row['id'] ?>"><button style="float: right;" name="add_friend">Добавить в друзья</button></a>
- 					</div>
+ 					</div> -->
  				</article>
  			<?php endforeach; ?>
  		</div>
  	</section>
  </body>
  </html>
+
+
+ <?php } ?>

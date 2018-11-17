@@ -1,24 +1,22 @@
-$( document ).ready(function() {
-    $("#add_mess").click(
-		function(){
-			sendAjaxForm('result_form', 'ajax_form', 'mess.php');
-			return false; 
-		}
-	);
+$(document).ready(function(){
+    $('#add_mess').bind('click', function(){
+        var author = <?=$id ?>;
+        var recipient = <?=$_GET['who'] ?>;
+        var text = $("#text_dialog").val();
+        function Before(){
+            $('error').text('Отправка сообщения');
+        }
+        function Suc(){
+            $("#articles").load("/dialog.php?who=<?=$_GET['who'] ?> #articles > *");
+            $("#text_dialog").val("");
+        }
+        $.ajax({
+            url: "add_dialog_mess.php",
+            type: 'POST',
+            data: ({author: author, recipient: recipient, text: text}),
+            dataType: 'html',
+            sendBefore: Before,
+            success: Suc
+        });
+    });
 });
- 
-function sendAjaxForm(result_form, ajax_form, url) {
-    $.ajax({
-        url:     url, //url страницы (action_ajax_form.php)
-        type:     "POST", //метод отправки
-        dataType: "html", //формат данных
-        data: $("#"+ajax_form).serialize(),  // Сеарилизуем объект
-        success: function(response) { //Данные отправлены успешно
-        	result = $.parseJSON(response);
-        	$('#result_form').html('Имя: '+result.name+'<br>Телефон: '+result.phonenumber);
-    	},
-    	error: function(response) { // Данные не отправлены
-            $('#result_form').html('Ошибка. Данные не отправлены.');
-    	}
- 	});
-}

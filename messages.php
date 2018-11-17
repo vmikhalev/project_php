@@ -1,9 +1,17 @@
 <?php 
 require 'db.php';
+
+if (!(isset($_SESSION['logged_user']))) {
+    R::close();
+    exit();
+}else{
+
 $id = $_SESSION['logged_user']->id;
 
-$messages =  R::getAssoc("SELECT * FROM messages WHERE recipient = ".$id);
-$messages1 = R::getAssoc("SELECT * FROM messages WHERE author = ".$id);
+$mess =  R::getAssoc("SELECT * FROM messages WHERE recipient = ".$id);
+$mess1 = R::getAssoc("SELECT * FROM messages WHERE author = ".$id);
+$messages = array_reverse($mess);
+$messages1 = array_reverse($mess1);
  ?>
 <!DOCTYPE html>
 <html>
@@ -11,12 +19,17 @@ $messages1 = R::getAssoc("SELECT * FROM messages WHERE author = ".$id);
 	<title>Мои сообщения</title>
 	<?php include 'wrapper/links.php'; ?>
 	<link rel="stylesheet" type="text/css" href="css/messages.css">
+	<script type="text/javascript">
+		$(document).ready(function(){
+			setInterval(function(){ $("#inbox").load("messages.php #inbox"); }, 1000);
+		});
+	</script>
 </head>
 <body>
 	<?php include 'wrapper/header.php'; ?>
 	<div style="display: inline-flex;" class="panels">
  	<section class="message_border">
- 		<div class="results">
+ 		<div id="results" class="results">
  			<div id="inbox">
  			<?php foreach ($messages as $r) {
  				$author = $r['author'];
@@ -28,7 +41,7 @@ $messages1 = R::getAssoc("SELECT * FROM messages WHERE author = ".$id);
  				$q = R::getAssoc("SELECT * FROM people WHERE id = ".$author);
  				foreach ($q as $a) {
  				?>
- 				<a href="dialog.php?who=<?=$author; ?>"><article style="border-bottom: 1px solid grey;">
+ 				<a href="dialog.php?who=<?=$a['id']; ?>"><article style="border-bottom: 1px solid grey;">
  					<div>
  						<img style="width: 70px;height: 70px;" src="<?=$a['avatar'] ?>">
  					</div>
@@ -58,7 +71,7 @@ $messages1 = R::getAssoc("SELECT * FROM messages WHERE author = ".$id);
  				$q1 = R::getAssoc("SELECT * FROM people WHERE id = ".$author1);
  				foreach ($q1 as $a1) {
  				?>
- 				<a href="dialog.php?who=<?=$author; ?>"><article style="border-bottom: 1px solid grey;">
+ 				<a href="dialog.php?who=<?=$recipient1; ?>"><article style="border-bottom: 1px solid grey;">
  					<div>
  						<img style="width: 70px;height: 70px;" src="<?=$a1['avatar'] ?>">
  					</div>
@@ -91,3 +104,5 @@ $messages1 = R::getAssoc("SELECT * FROM messages WHERE author = ".$id);
  <script type="text/javascript" src="js/messages.js"></script>
 </body>
 </html>
+
+<?php } ?>

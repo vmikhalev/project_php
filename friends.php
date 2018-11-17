@@ -1,5 +1,11 @@
 <?php 
 require 'db.php';
+
+if (!(isset($_SESSION['logged_user']))) {
+    R::close();
+    exit();
+}else{
+
 $id = $_SESSION['logged_user']->id;
 
 $friends_all =  R::getAll("SELECT * FROM friends WHERE accept != 0 AND user_id = ".$id);
@@ -83,3 +89,5 @@ $friends_sender = R::getAssoc("SELECT * FROM friends WHERE sender != 0 AND user_
  <script type="text/javascript" src="js/messages.js"></script>
 </body>
 </html>
+
+<?php } ?>

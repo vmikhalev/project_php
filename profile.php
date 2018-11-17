@@ -1,34 +1,30 @@
 <?php 
 require 'db.php';
 
-if (!is_numeric($_GET['id'])){
-  exit();
-}
+if (!is_numeric($_GET['id']) || !(isset($_SESSION['logged_user']))) {
+    R::close();
+    exit();
+}else{
 
 $post_id = $_GET['id'];
 $post = R::load('people', $post_id);
 
+$is_friend = R::getAll("SELECT * FROM friends WHERE accept = ".$post->id." AND user_id = ".$_SESSION['logged_user']->id);
+$yes = 0;
+$a = 0;
+for($i = 0; $i <= count($is_friend); $i++){
+    if ($post->id == $i['accept']) {
+        $a = 1;
+    }
+}
+if ($a == 1) {
+    $yes = 1;
+}
 
-$postslook =  R::getAll('SELECT * FROM posts WHERE people_id = '.$post_id);
+$postslook =  R::getAll('SELECT * FROM posts WHERE author = '.$post_id);
 $postslook1 = array_reverse($postslook);
 
 $friends = R::getAll('SELECT * FROM friends WHERE accept != 0 AND user_id = '.$post->id);
-
-$errors_new_post = '';
-if(isset($_POST['add_new_post'])){
-	if(trim($_POST['text_new_post'] == '')){
-		$errors_new_post = "Напишите текст!";
-	}
-
-	if (trim($errors_new_post == '')) {
-		$add = R::dispense('posts');
-		$add->people_id = $post->id;
-		$add->text = $_POST['text_new_post'];
-		$add->date = time();
-		R::store($add);
-		header('Location: profile.php?id='.$post->id);
-	}
-}
 
 
 if (isset($_POST['send_message'])) {
@@ -37,10 +33,12 @@ if (isset($_POST['send_message'])) {
     }
     if (trim($errors_text_message == '')) {
         $send = R::dispense('messages');
+        $send->chat_id = $post->id;
         $send->author = $_SESSION['logged_user']->id;
         $send->recipient = $_GET['id'];
-        $send->text = $_POST['text_message'];
+        $send->text = htmlspecialchars($_POST['text_message']);
         $send->data = date("l dS of F Y h:I:s A");
+        $send->read = '0';
         R::store($send);
     }
 }
@@ -58,8 +56,32 @@ R::close();
 	<?php include 'wrapper/links.php'; ?>
 	<link rel="stylesheet" type="text/css" href="css/profile.css">
 	<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+        $(document).ready(function(){
+            $('#add_post_').bind('click', function(){
+                var author_id = <?=$post->id ?>;
+                var text = $("#text_post").val();
+                function Before(){
+                    
+                }
+                function Suc(){
+                    $("#all_posts").load("/profile.php?id=<?=$post->id ?> #all_posts > *");
+                    $("#text_post").val("");
+                }
+                $.ajax({
+                    url: "add_post.php",
+                    type: 'POST',
+                    data: ({author: author_id, text: text}),
+                    dataType: 'html',
+                    sendBefore: Before,
+                    success: Suc
+                });
+            });
+        });
+</script>
+
 </head>
 <body style="margin: 0; background: #E9EBEE;">
     <div id="blackground"></div>
@@ -124,6 +146,13 @@ R::close();
                     <li onclick="ok(a);">Место работы: </li>
                 </ul>
             </div>
+        <?php if (isset($_SESSION['logged_user']) && $_SESSION['logged_user']->email == $post->email):?>
+
+        <?php elseif($post->id == $is_friend->accept): ?>
+            <a href="add_friend.php?friend=<?=$row['id'] ?>"><button style="" name="add_friend">Удалить из друзей</button></a>
+        <?php else: ?>
+            <a href="add_friend.php?friend=<?=$post->id ?>"><button style="" name="add_friend">Добавить в друзья</button></a>
+        <?php endif; ?>
 		</div>
 	</section>
 	<section class="data_bottom">
@@ -156,10 +185,10 @@ R::close();
 			<h1 style="padding-left: 10px;"><b>Публикации</b></h1>
 <?php if(isset($_SESSION['logged_user']) && $_SESSION['logged_user']->email == $post->email): ?>
 			<div style="padding-left: 10px; padding-right: 10px;" class="add_post">
-				<form method="post">
-					<textarea rows="7" placeholder="Добавить текст" name="text_new_post"></textarea><br>
-					<input style="float: right;" type="submit" name="add_new_post" value="Добавить запись">
-				</form>
+				
+					<textarea style="width: 100%;" id="text_post" rows="7" placeholder="Добавить текст" name="text_new_post"></textarea><br>
+					<input id="add_post_" style="float: right;" type="submit" name="add_new_post" value="Добавить запись">
+				
 			</div>
 <?php endif; ?>
 <br><br><br>
@@ -168,7 +197,7 @@ R::close();
 <article class="posts">
 
 			<div class="container" style="width: 100%;">
-    <div class="row" style="display: ruby;">
+    <div id="all_posts" class="row" style="display: grid;">
 
 <?php foreach($postslook1 as $key): ?>
         <div class="[ col-xs-12 col-sm-offset-1 col-sm-5 ]">
@@ -227,10 +256,9 @@ R::close();
 
 
 
-
-
-
 <script type="text/javascript" src="js/profile.js"></script>
 </body>
 
 </html>
+
+<?php } ?>
