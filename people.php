@@ -3,14 +3,12 @@ require 'db.php';
 
 if (!(isset($_SESSION['logged_user']))) {
     R::close();
-    exit();
+    exit('404');
 }else{
 
-$id = $_SESSION['logged_user']->id;
-$people =  R::getAll('SELECT * FROM people WHERE email != '.$user->email);
+$people =  R::getAll('SELECT * FROM people WHERE id != '.$_SESSION['logged_user']->id);
 
-$friends_sender = R::getAll('SELECT * FROM friends WHERE sender != 0 OR taker != 0');
-$friends_accept = R::getAll('SELECT * FROM friends WHERE accept != 0');
+
  ?>
  <!DOCTYPE html>
  <html>

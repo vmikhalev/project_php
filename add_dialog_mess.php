@@ -11,6 +11,7 @@ $add->author = $_POST['author'];
 $add->recipient = $_POST['recipient'];
 $add->text = htmlspecialchars($_POST['text']);
 $add->data = date("H:i:s | d F Y");
+$add->read = '0';
 R::store($add);
 
 }

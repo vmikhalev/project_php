@@ -10,11 +10,15 @@ $id = $_SESSION['logged_user']->id;
 
 $friends_all =  R::getAll("SELECT * FROM friends WHERE accept != 0 AND user_id = ".$id);
 $friends_sender = R::getAssoc("SELECT * FROM friends WHERE sender != 0 AND user_id = ".$id);
+
+$friends_sender1 = count($friends_sender);
+
+R::close();
  ?>
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Мои сообщения</title>
+	<title>Друзья</title>
 	<?php include 'wrapper/links.php'; ?>
 	<link rel="stylesheet" type="text/css" href="css/friends.css">
 </head>
@@ -32,14 +36,14 @@ $friends_sender = R::getAssoc("SELECT * FROM friends WHERE sender != 0 AND user_
  				?>
  				<a href="profile.php?id=<?=$a['id']; ?>"><article style="border-bottom: 1px solid grey;">
  					<div>
- 						<img style="width: 70px;height: 70px;" src="<?=$a['avatar'] ?>">
+ 						<img style="border-radius:50%;width: 70px;height: 70px;" src="<?=$a['avatar'] ?>">
  					</div>
  					<div>
  							<p><?=$a['name']; ?>
  						   	   <?=$a['surname']; ?>
  							</p>
  							<p>
- 								<a href="dialog.php?who=<?=$a['id'] ?>"><button>Написать</button></a>
+ 								<a class="start_dialog" href="dialog.php?who=<?=$a['id'] ?>"><button>Написать</button></a>
  							</p>
  					</div>
  				</article></a>
@@ -58,14 +62,14 @@ $friends_sender = R::getAssoc("SELECT * FROM friends WHERE sender != 0 AND user_
  				?>
  				<a href="dialog.php?who=<?=$author; ?>"><article style="border-bottom: 1px solid grey;">
  					<div>
- 						<img style="width: 70px;height: 70px;" src="<?=$a1['avatar'] ?>">
+ 						<img style="border-radius:50% ;width: 70px;height: 70px;" src="<?=$a1['avatar'] ?>">
  					</div>
  					<div>
  							<p><?=$a1['name']; ?>
  						   	   <?=$a1['surname']; ?>
  							</p>
  							<p>
- 									<a href="get_friend.php?friend=<?=$a1['id'] ?>"><button>Одобрить</button></a>
+ 									<a class="start_dialog" href="get_friend.php?friend=<?=$a1['id'] ?>"><button>Одобрить</button></a>
  							</p>
  					</div>
  				</article></a>
@@ -80,7 +84,11 @@ $friends_sender = R::getAssoc("SELECT * FROM friends WHERE sender != 0 AND user_
  		<section class="type_message">
  			<ul>
  				<li><a onclick="in1()" id="inbox_button" href="#">Друзья</a></li>
- 				<li><a onclick="out1()" id="outbox_button" href="#">Запросы</a></li>
+ 				<li><a onclick="out1()" id="outbox_button" href="#">Запросы</a>
+ 				<?php if($friends_sender1 > 0): ?>
+                    <b style="color: white;background-color: red;border-radius: 50px; padding: 4px 4px 4px 4px;"><?=$friends_sender1 ?></b>
+                <?php endif; ?>
+ 				</li>
  			</ul>
  		</section>
  	</aside>

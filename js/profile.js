@@ -41,6 +41,13 @@ document.getElementById('startmodal').onclick=function(){
   // }
 }
 
+$('#close').bind('click', function(){
+  var blackground = document.getElementById('blackground');
+  var container = document.getElementById('modalcontainer');
+  blackground.style.height = '0%';
+  container.style.height = '0%';
+});
+
 // document.getElementById('blackground').onclick=function{
 //   if(flag == 0){
 

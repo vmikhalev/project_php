@@ -1,33 +1,32 @@
 <?php
-ini_set('display_errors','On');
-error_reporting(E_ALL | E_STRICT);
-
 require 'db.php';
 
-if(isset($_POST['load'])){
-$path = '/images/'; // директория для загрузки // расширение
-$new_name = time(); // новое имя с расширением
-$full_path = $path.$_FILES['myfile']['name']; // полный путь с новым именем и расширением
+if (!(isset($_SESSION['logged_user']))) {
+    R::close();
+    exit();
+}else{
 
+$name = $_FILES['userfile']['name'];
 
-print_r($_FILES);
+$allowed =  array('gif','png' ,'jpg', 'jpeg');
+$ext = pathinfo($name, PATHINFO_EXTENSION);
+if(!in_array($ext,$allowed) ) {
+	echo "<script>alert('Не допустимое раширение файла!')</script>";
+    header('Location: profile.php?id='.$user->id);
+    exit();
+}else{
 
-if($_FILES['myfile']['error'] == 0){
-    if(move_uploaded_file($_FILES['myfile']['tmp_name'], $full_path)){
-        // Если файл успешно загружен, то вносим в БД (надеюсь, что вы знаете как)
-        // Можно сохранить $full_path (полный путь) или просто имя файла - $new_name
-        R::exec('UPDATE people SET avatar = '.$full_path.' WHERE email = '.$user->id);
-        print_r($_FILES);
-        header('Location: profile.php?id='.$user->id);
-    }
+$uploads_dir = 'avatars/';
+$new_name = time().$name;
+$full_dir = $uploads_dir.$new_name;
+
+if (is_uploaded_file($_FILES['userfile']['tmp_name']))
+{
+     move_uploaded_file($_FILES['userfile']['tmp_name'], $uploads_dir.$new_name);
+     R::exec( "UPDATE people SET avatar= '/avatars/$new_name' WHERE id=".$user->id );
+     header('Location: profile.php?id='.$user->id);
 }
 
+
 }
-?>
-
-
-<form action="" method="post" enctype="multipart/form-data">
-    <label>Выгрузить файл на сервер</label><br />
-    <input type="file" name="myfile" id="userfile"><br />
-    <input name="load" type="submit" value="Выгрузить!">
-</form>
+}

@@ -1,0 +1,142 @@
+.grid-block1{grid-area: menu;}
+.grid-block2{grid-area: avatar;}
+.grid-block3{grid-area: info;}
+.grid-block4{grid-area: but;}
+.grid-block5{grid-area: friends;}
+.grid-block6{grid-area: images;}
+.grid-block7{grid-area: posts;}
+.grid-block8{grid-area: null;}
+
+.grid-block9{grid-area: nully;}
+.grid-block10{grid-area: articles;}
+
+
+.grid-profile{
+	width: 100%;
+	height: auto;
+	display: grid;
+	grid-template-areas: 
+	'menu avatar avatar  info info null'
+	'menu avatar avatar info info null'
+	'menu avatar avatar images images null'
+	'menu but but images images null'
+	'menu but but images images null'
+	'menu friends friends posts posts null'
+	'menu friends friends posts posts null';
+	grid-gap: 10px;
+	background-color: #E9EBEE;;
+	padding: 5px;
+    grid-template-columns: 15% 20% 0% 5% 40% 10% 15%;
+}
+.grid-profile > div{
+	background-color: white;
+	border-radius: 10px;
+}
+.grid-block1 ul{
+	list-style: none;
+	margin: 0;
+	padding-left: 15px;
+	width: 100%;
+}
+
+#modalcontainer{
+    position: absolute;
+    z-index: 1000;
+    width: 60%;
+    height: 0;
+    background-color: white;
+    top: 20%;
+    left: 20%;
+    right: 20%;
+    bottom: 20%;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0,0,0,0.7);
+    border-radius: 7px;
+}
+
+#blackground{
+    position: absolute;
+    z-index: 999;
+    width: 100%;
+    height: 0;
+    background-color: rgba(0,0,0,0.8);
+}
+
+.modalcontent{
+    width: 95%;
+    height: 95%;
+    margin: 2.5% 2.5% 2.5% 2.5%;
+} 
+.modalcontent h1,h3{
+    text-align: center;
+}
+
+
+.img_list{
+    width: 100%;
+    height: 100px;
+}
+.img-list-container{
+	padding-left: 1%;
+    width: 97%;
+    height: 80%;
+    display: grid;
+    grid-column-gap: 5px;
+    grid-template-columns: 25% 25% 25% 25%;
+    grid-auto-rows: 100%;
+}
+.img-grid{
+}
+.img-grid img{
+    width: 100%;
+    height: 100%;
+}
+
+.stand_button{
+    color: white;
+    background-color: rgb(22, 166, 255);
+    border: 0;
+    margin-top: 5px;
+    border-radius: 5px;
+    text-align: center;
+    margin: 0 auto;
+    width: 100%;
+    cursor: pointer;
+}
+
+#all_posts article{
+    display: inline-flex;
+    width: 80%;
+    height: auto;
+    padding-top: 5px;
+}
+#all_posts article div img{
+    border-radius: 50%;
+}
+
+.friends{
+    width: 100%;
+    min-height: 125px;
+    height: auto;
+    background-color: white;
+    border-radius: 10px;
+}
+.friends_blocks{
+    width: 100%;
+    height: 100px;
+}
+.friends_blocks article{
+    width: 33%;
+    height: 100%;
+    color: black;
+    text-align: center;
+}
+.img_friend img{
+    width: 100%;
+    height: 90%;
+    border-radius: 50%;
+}
+.img_friend{
+    width: 100%;
+    height: 80%;
+}

@@ -41,7 +41,7 @@ $messages1 = array_reverse($mess1);
  				$q = R::getAssoc("SELECT * FROM people WHERE id = ".$author);
  				foreach ($q as $a) {
  				?>
- 				<a href="dialog.php?who=<?=$a['id']; ?>"><article style="border-bottom: 1px solid grey;">
+ 				<a href="dialog.php?who=<?=$author; ?>"><article style="border-bottom: 1px solid grey;">
  					<div>
  						<img style="width: 70px;height: 70px;" src="<?=$a['avatar'] ?>">
  					</div>
